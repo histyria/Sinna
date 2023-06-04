@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <h2>Videos List
+               
+            </h2>
+        </div>
+       
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        {% for vids in vid_list %}
+        <div class="col-lg-6 col-md-12">
+            <div class="card single_post">
+                <div class="body">
+                    <h3 class="m-t-0 m-b-5"><a >{{ vids.video_title }}</a></h3>
+                    
+                </div>                    
+                <div class="body">
+                    <div class="img-post ">
+                        <iframe width="690" height="350" src="https://www.youtube.com/embed/{{ vids.youtube_link }}" title="{{ vids.video_title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                       
+                    </div>
+                    <h4>Videos summary </h4>
+                    <p>{{ vids.video_summary }}</p>
+                        
+                </div>
+            </div>
+        </div> 
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

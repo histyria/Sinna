@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <h1 class="text-center logo my-4">
+      <a href="#">Dawadmi Hospital Login</a>
+    </h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Log in</h1>
+            <form method="post" novalidate>
+              <div class="row">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                      <label class="control-label">{{ field.label }}</label>
+                      <div class="form-group {% if field.errors %} has-error {% else %} has-success {% endif %}">
+                          {{ field }}
+                      </div>
+                      {% if field.errors %}
+                      <label class="control-label text-danger" >{{ field.errors.as_text }}</label>
+                          {% endif %}
+                  </div>
+                  {% endfor %}
+                  
+                  <br>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="col text-center">
+                              <br>
+                              <br>
+                              <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                  value="Save" />
+              
+                      </div>
+              
+                  </div>
+              </div>
+          </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            Create New account <a href="#">Sign up </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

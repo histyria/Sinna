@@ -1,0 +1,189 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content profile-page">
+    <div class="block-header">
+        <div class="row">
+
+            <div class="col-lg-7 col-md-7 col-sm-12 text-left">
+
+                <ul class="breadcrumb float-md-left">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> helpdesk</a></li>
+                    <li class="breadcrumb-item active">profile</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-12">
+        <div class="card">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#About">About </a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#update_profile">update profile</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#change_password">change_password</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="About">
+
+                <div class="card profile-header">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-12">
+                                {% if user.profile.avatar == '' %}
+                                <div class="profile-image float-md-right"><img
+                                        src="{% static 'assets/images/profile_av.jpg' %}"></a></div>
+
+                                {% else %}
+                                <div class="profile-image float-md-right"><img src="{{ user.profile.avatar.url  }}"></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-12">
+                                <br>
+                                <h4 class="m-t-0 m-b-0"><strong>{{ user.profile }}</strong> </h4>
+                                <span class="job_post">{{ user.profile.bio }}</span>
+                                <p> {{ user.Departement }} </p>
+                                <div>
+                                    <button class="btn btn-primary btn-round" data-toggle="tab"
+                                        href="#update_profile">Edite</button>
+                                    <button class="btn btn-primary btn-round btn-simple">Change Password</button>
+                                </div>
+                                <p class="social-icon m-t-5 m-b-0">
+                                    <a title="Twitter" href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a>
+                                    <a title="Facebook" href="javascript:void(0);"><i
+                                            class="zmdi zmdi-facebook"></i></a>
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="update_profile">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Account</strong> Settings</h2>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="City">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="E-mail">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Country">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="4" class="form-control no-resize"
+                                        placeholder="Address Line 1"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkbox">
+                                    <input id="procheck1" type="checkbox">
+                                    <label for="procheck1">Profile Visibility For Everyone</label>
+                                </div>
+                                <div class="checkbox">
+                                    <input id="procheck2" type="checkbox">
+                                    <label for="procheck2">New task notifications</label>
+                                </div>
+                                <div class="checkbox">
+                                    <input id="procheck3" type="checkbox">
+                                    <label for="procheck3">New friend request notifications</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-round">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane " id="change_password">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>change </strong> password</h2>
+                    </div>
+                    <div class="body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="col-md-4 form-row">
+                                <div class="">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="id_old_password">Old Password</label>
+                                        <input type="password" name="old_password" autocomplete="new-password"
+                                            class="form-control" required id="id_old_password"
+                                            placeholder="Enter Old Password" />
+                                        <span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-row">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="id_new_password1">New Password</label>
+                                            <input type="password" name="new_password1" autocomplete="new-password"
+                                                class="form-control" required id="id_new_password1"
+                                                placeholder="Enter New Password" />
+                                            <span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="id_new_password2">New Password
+                                                Confirmation</label>
+                                            <input type="password" name="new_password2" autocomplete="new-password"
+                                                required id="id_new_password2" class="form-control"
+                                                placeholder="Confirm New Password" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 form-row">
+                                <div class="">
+                                    <div class="form-group mt-0 mb-1">
+                                        <button type="submit" class="col-md-12 btn btn-dark" id="reset">Update
+                                            Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

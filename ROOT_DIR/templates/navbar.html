@@ -1,0 +1,35 @@
+
+{% load static %}
+       <!-- Top Bar -->
+       <nav class="navbar p-l-5 p-r-5">
+        <ul class="nav navbar-nav navbar-left">
+            <li >
+                
+                    <a href="javascript:void(0);" class="bars"></a>
+                    <a class="mega-menu" ><img src="{% static 'light/assets/images/logo.svg' %}" width="30" alt="Sinna"><span class="m-l-10">
+                        <p> <strong> Welcom To Sinna</strong>
+                            <small>Learning chinease Lang</small>
+                            </p>
+                    </span></a>
+                
+            </li>
+           
+                
+
+           
+         
+            <li class="float-right">
+                {%if user.is_authenticated%}
+             
+                    <a class="mega-menu" href="{%url 'users:password_change'%}">Change password</a>
+                    <a class="mega-menu" href="{% url 'users:logout' %}">logout</a>
+                    {%else%}
+                    
+                    <a class="mega-menu" href="{% url 'users:login' %}">Login</a>
+                    <a class="mega-menu" href="{% url 'users:register' %}">Signup</a>
+                    {%endif%}
+                
+                <a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
+            </li>
+        </ul>
+    </nav>

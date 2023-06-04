@@ -1,0 +1,47 @@
+{% extends 'users/authentication_base.html' %}
+{% load static %}
+{% block authentication %}
+
+
+<form role="form" method="post">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger " ">
+                                <div id=" form_errors">
+        {% for key, value in form.errors.items %}
+        <strong>{{ value }}</strong>
+        {% endfor %}
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    {% endif %}
+    <div class="header">
+        <div class="logo-container">
+            <img src="{% static 'light/assets/images/logo.svg' %}" alt="">
+        </div>
+        <h5>Log in</h5>
+    </div>
+    <div class="content">
+        <div class="input-group input-lg">
+            <input type="text" class="form-control" placeholder="Enter User Name" name="username">
+            <span class="input-group-addon">
+                <i class="zmdi zmdi-account-circle"></i>
+            </span>
+        </div>
+        <div class="input-group input-lg">
+            <input type="password" placeholder="Password" name="password" class="form-control" />
+            <span class="input-group-addon">
+                <i class="zmdi zmdi-lock"></i>
+            </span>
+        </div>
+    </div>
+    <div class="footer text-center">
+        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block ">SIGN IN</button>
+        <p>Don't have an account? <a href="{% url 'users:register' %}" class="text-primary">Register</a></p>
+    </div>
+</form>
+
+{% endblock authentication %}

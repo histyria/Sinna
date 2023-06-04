@@ -1,0 +1,191 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block header %}
+<div class="block-header">
+    <div class="row">
+
+        <div class="col-lg-7 col-md-7 col-sm-12 text-left">
+
+            <ul class="breadcrumb float-md-left">
+                <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Home</a></li>
+                <li class="breadcrumb-item active">profile</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://thememakker.com/templates/oreo/html/assets/plugins/multi-select/css/multi-select.css">
+<!-- Bootstrap Spinner Css -->
+<!-- Bootstrap Tagsinput Css -->
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="https://thememakker.com/templates/oreo/html/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<!-- noUISlider Css -->
+<!-- Select2 -->
+<link rel="stylesheet" href="https://thememakker.com/templates/oreo/html/assets/plugins/select2/select2.css" />
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+
+
+   
+    <div class="row">
+        <div class="col-lg-6 ">
+            <div class="card">
+                <ul class="nav nav-tabs">
+                   
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#update_profile">update profile</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                            href="#change_password">change_password</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+           
+                <div role="tabpanel" class="tab-pane active" id="update_profile">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Account</strong> Settings</h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <form method="POST" action="{% url 'users:profile' %} " enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            {% for field in user_form %}
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="form-group">
+                                                <input type="{% if field.name == 'password1'%}password{% elif field.name == 'password2'%}password{% elif field.name == 'email' %}email{% else %}text{% endif %}" 
+                                                class="form-control" placeholder="Enter {{ field.name }}" name="{{ field.name }}" id="id_{{field.name}}">
+                                              
+                                            </div>
+                                        </div>
+    
+                                        {% endfor %}    
+                                        {{profile_form.avatar}}
+                                        <div class="d-md-block text-left">
+                                            <div class="font-weight-normal text-dark mb-1">Choose Image</div>
+                                            <div class="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                                        </div>
+    
+                                   
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary btn-round">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane " id="change_password">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>change </strong> password</h2>
+                        </div>
+                        <div class="row">
+                            <!-- basic form start -->
+                            <div class="col-12 mt-5">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        {% if message %}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                        </div>
+                                        {% endif %}
+                                        {% if form.non_field_errors %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {% for error in form.non_field_errors %}
+                                            {{ error|escape }}<br>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        <form method="POST" action="{% url 'users:password_change' %}">
+                                            {% csrf_token %}
+
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="id_old_password">Old Password</label>
+                                                <input type="password" class="form-control" name="old_password" required
+                                                    maxlength="254" id="id_old_password">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="id_new_password1">New
+                                                    Password</label>
+                                                <input type="password" class="form-control" name="new_password1"
+                                                    required maxlength="254" id="id_new_password1">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="id_new_password2">New Password
+                                                    Confirmation</label>
+                                                <input type="password" class="form-control" name="new_password2"
+                                                    required maxlength="254" id="id_new_password2">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Submit</button>
+                                            <a role="button" class="btn btn-secondary mt-4 pr-4 pl-4"
+                                                href="{% url 'users:profile' %}">Back</a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- basic form end -->
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-7 col-md-12">
+            <div class="card profile-header">
+                <div class="header">
+                    <h2><strong>change </strong> Avatar</h2>
+                </div>
+                <div class="body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            {% if user.profile.avatar == '' %}
+                            <div class="profile-image float-md-right"><img
+                                    src="{% static 'assets/images/profile_av.jpg' %}"></a></div>
+
+                            {% else %}
+                            <div class="profile-image float-md-right"><img src="{{ user.profile.avatar.url  }}"></a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-12">
+                            <br>
+                            <h4 class="m-t-0 m-b-0"><strong>{{ user.profile }}</strong> </h4>
+                            <span class="job_post">{{ user.first_name }}</span>
+                            <p> {{ user.last_name }} </p>
+                            <div>
+                                <button class="btn btn-primary btn-round" data-toggle="tab" href="#update_profile">Save</button>
+                                
+                            </div>
+                            <p class="social-icon m-t-5 m-b-0">
+                                <a title="Twitter" href="javascript:void(0);"><i class="zmdi zmdi-twitter"></i></a>
+                                <a title="Facebook" href="javascript:void(0);"><i class="zmdi zmdi-facebook"></i></a>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+       
+    </div>
+
+
+{% endblock %}

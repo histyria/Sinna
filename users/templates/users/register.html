@@ -1,0 +1,34 @@
+{% extends 'users/authentication_base.html' %}
+{% load static %}
+{% block authentication %}
+
+
+<form role="form" method="post">
+    {% csrf_token %}
+
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="{% static 'light/assets/images/logo.svg' %}" alt="">
+        </div>
+        <h5>SIGN Up</h5>
+    </div>
+    <div class="content">
+      {% for field in form %}
+        <div class="input-group input-lg">
+            <input type="{% if field.name == 'password1'%}password{% elif field.name == 'password2'%}password{% elif field.name == 'email' %}email{% else %}text{% endif %}" class="form-control" placeholder="Enter {{ field.name }}" name="{{ field.name }}">
+            
+            <span class="text-danger">{{ field.errors }}</span>
+        </div>
+       
+        {% endfor %}
+       
+    </div>
+    <div class="footer text-center">
+        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block ">SIGN Up</button>
+        <hp> have an account? <a href="{% url 'users:login' %}" class="text-primary">login</a></hp>
+    </div>
+</form>
+
+{% endblock authentication %}
+
